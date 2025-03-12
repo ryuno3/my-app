@@ -1,5 +1,7 @@
-import { prisma } from "@/lib/prisma/prismaClient";
-import { revalidateTag } from "next/cache";
+"use client";
+
+import { deleteTodo, checkCompleted } from "@/actions/todoAction";
+import { useState } from "react";
 
 interface TodoItemProps {
   id: string;
@@ -7,42 +9,33 @@ interface TodoItemProps {
 }
 
 export default function TodoItem({ task, id }: TodoItemProps) {
-  const deleteTodo = async () => {
-    "use server";
-    try {
-      if (!task) {
-        return;
-      }
-      await prisma.todo.delete({
-        where: { id: id },
-      });
-    } catch (e) {
-      console.log("error is ", e);
+  const [isCompleted, setIsCompleted] = useState(false);
+
+  const handleDelete = () => {
+    const res = deleteTodo(task, id);
+    if (!res) {
+      throw new Error("Error in deleting the task");
     }
-    revalidateTag("todo");
   };
 
-  const isCompleted = async () => {
-    "use server";
-    try {
-      await prisma.todo.update({
-        where: { id: id },
-        data: { completed: true },
-      });
-    } catch (e) {
-      console.log("error is ", e);
+  const handleCompleted = () => {
+    const res = checkCompleted(id, isCompleted);
+    if (!res) {
+      throw new Error("Error in updating the task");
     }
-    revalidateTag("todo");
+    setIsCompleted(!isCompleted);
   };
 
   return (
     <div>
-      <form action={deleteTodo} className="grid grid-cols-2 gap-2">
+      <form action={handleDelete} className="grid grid-cols-2 gap-2">
         <div className="flex items-center gap-2">
-          <input type="checkbox" onChange={isCompleted} className="mr-2" />
-          <span>{task}</span>
+          <input type="checkbox" id="checkbox" onChange={handleCompleted} className="mr-2" />
+          <label htmlFor="checkbox">
+            <span className={`${isCompleted ? "line-through text-gray-400" : ""}`}>{task}</span>
+          </label>
         </div>
-        <button type="submit" className="p-2 bg-red-500 text-white rounded">
+        <button type="submit" disabled={!isCompleted} className="p-2 bg-red-500 text-white rounded">
           Delete
         </button>
       </form>
