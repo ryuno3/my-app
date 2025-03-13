@@ -10,7 +10,7 @@ export const checkCompleted = async (id: string, state: boolean) => {
       data: { completed: !state },
     });
   } catch (e) {
-    console.log("error is ", e);
+    console.error("Update処理でのエラー:", e);
   }
   revalidateTag("todo");
 };
@@ -21,8 +21,6 @@ export const deleteTodo = async (
 ): Promise<TodoActionState> => {
   try {
     const id = formdata.get("id") as string;
-
-    console.log("これがformData", formdata, "これがid", id);
 
     if (!id) {
       return {
@@ -37,7 +35,8 @@ export const deleteTodo = async (
     revalidateTag("todo");
     return { message: "Task deleted successfully", success: true };
   } catch (e) {
-    console.log("error is ", e);
+    console.error("Delete処理でのエラー:", e);
+
     return { message: "Failed to delete task", success: false };
   }
 };
@@ -60,7 +59,7 @@ export const addTodo = async (
     revalidateTag("todo");
     return { message: "Task added successfully", success: true };
   } catch (e) {
-    console.log("error is ", e);
+    console.error("create処理でのエラー:", e);
     return { message: "Failed to add task", success: false };
   }
 };

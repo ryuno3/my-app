@@ -36,9 +36,7 @@ export default function TodoItem({ task, id, completed, initialState }: TodoItem
           type="submit"
           disabled={isPending || !isCompleted} // ここが無効化条件
           className={`p-2 text-white rounded ${
-            isPending || !isCompleted
-              ? "bg-gray-400" // 無効時の色
-              : "bg-red-500 hover:bg-red-600" // 有効時の色
+            isPending || !isCompleted ? "bg-gray-400" : "bg-red-500 hover:bg-red-600"
           }`}
         >
           {isPending ? "Deleting..." : "Delete"}
