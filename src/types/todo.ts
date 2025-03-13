@@ -6,4 +6,8 @@ export interface TodoActionState {
 export interface TodoItemProps {
   id: string;
   task: string;
+  completed: boolean;
+  initialState?: TodoActionState;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

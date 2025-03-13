@@ -10,27 +10,39 @@ export const checkCompleted = async (id: string, state: boolean) => {
       data: { completed: !state },
     });
   } catch (e) {
-    console.log("error is ", e);
+    console.error("Update処理でのエラー:", e);
   }
   revalidateTag("todo");
 };
 
-export const deleteTodo = async (task: string, id: string) => {
+export const deleteTodo = async (
+  _prevState: TodoActionState | undefined,
+  formdata: FormData
+): Promise<TodoActionState> => {
   try {
-    if (!task) {
-      return;
+    const id = formdata.get("id") as string;
+
+    if (!id) {
+      return {
+        message: "Task id is required",
+        success: false,
+      };
     }
+
     await prisma.todo.delete({
       where: { id: id },
     });
+    revalidateTag("todo");
+    return { message: "Task deleted successfully", success: true };
   } catch (e) {
-    console.log("error is ", e);
+    console.error("Delete処理でのエラー:", e);
+
+    return { message: "Failed to delete task", success: false };
   }
-  revalidateTag("todo");
 };
 
 export const addTodo = async (
-  prevState: TodoActionState | null,
+  _prevState: TodoActionState | null,
   formdata: FormData
 ): Promise<TodoActionState> => {
   try {
@@ -47,7 +59,7 @@ export const addTodo = async (
     revalidateTag("todo");
     return { message: "Task added successfully", success: true };
   } catch (e) {
-    console.log("error is ", e);
+    console.error("create処理でのエラー:", e);
     return { message: "Failed to add task", success: false };
   }
 };
