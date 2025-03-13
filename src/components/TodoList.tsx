@@ -1,6 +1,12 @@
 import { prisma } from "@/lib/prisma/prismaClient";
 import TodoInput from "./TodoInput";
 import TodoItem from "./TodoItem";
+import { TodoActionState } from "@/types/todo";
+
+const initialState: TodoActionState = {
+  message: "",
+  success: false,
+};
 
 export default async function TodoList() {
   try {
@@ -11,11 +17,16 @@ export default async function TodoList() {
       <div className="grid grid-cols-1 gap-4 w-full max-w-[600px]">
         <h1 className="text-4xl font-bold">Todolist</h1>
         <div className="grid grid-cols-1 gap-4">
-          <TodoInput />
+          <TodoInput initialState={initialState} />
           {isEmpty && <p className="text-lg">No task</p>}
           {todo.map((t) => (
             <div key={t.id} className="grid grid-cols-2 gap-2">
-              <TodoItem id={t.id} task={t.title} />
+              <TodoItem
+                id={t.id}
+                task={t.title}
+                completed={t.completed}
+                initialState={initialState}
+              />
             </div>
           ))}
         </div>

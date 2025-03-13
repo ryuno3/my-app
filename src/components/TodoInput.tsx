@@ -4,12 +4,7 @@ import { addTodo } from "@/actions/todoAction";
 import { TodoActionState } from "@/types/todo";
 import { useActionState } from "react";
 
-const initialState: TodoActionState = {
-  message: "",
-  success: false,
-};
-
-export default function TodoInput() {
+export default function TodoInput({ initialState }: { initialState: TodoActionState }) {
   const [state, action, isPending] = useActionState(addTodo, initialState);
 
   return (
