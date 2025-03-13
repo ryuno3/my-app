@@ -1,12 +1,8 @@
 "use client";
 
 import { deleteTodo, checkCompleted } from "@/actions/todoAction";
+import { TodoItemProps } from "@/types/todo";
 import { useState } from "react";
-
-interface TodoItemProps {
-  id: string;
-  task: string;
-}
 
 export default function TodoItem({ task, id }: TodoItemProps) {
   const [isCompleted, setIsCompleted] = useState(false);
