@@ -4,6 +4,7 @@ import { signIn } from "@/auth";
 import { prisma } from "@/lib/prisma/prismaClient";
 import { UserActionState } from "@/types/user";
 import { hashPassword } from "@/utils/auth/password";
+import { redirect } from "next/navigation";
 
 export const addUser = async (
   _prevState: UserActionState,
@@ -36,6 +37,8 @@ export const addUser = async (
     console.error("User creation error:", e);
 
     return { message: "Failed to create account", success: false };
+  } finally {
+    redirect("/");
   }
 };
 
