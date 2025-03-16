@@ -2,14 +2,25 @@
 
 import { addTodo } from "@/actions/todoAction";
 import { TodoActionState } from "@/types/todo";
+import { useSession } from "next-auth/react";
 import { useActionState } from "react";
 
 export default function TodoInput({ initialState }: { initialState: TodoActionState }) {
   const [state, action, isPending] = useActionState(addTodo, initialState);
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+
+  if (!session?.user?.id) {
+    return null;
+  }
 
   return (
     <div className="grid grid-cols-1 gap-4">
       <form action={action} className="grid grid-cols-2 gap-2">
+        <input type="hidden" name="userId" value={session.user.id} />
         <input
           type="text"
           name="task"

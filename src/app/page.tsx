@@ -1,6 +1,6 @@
-import TodoList from "../components/TodoList";
+import TodoList from "../components/todo/TodoList";
 
-export default function Home() {
+export default async function Home() {
   return (
     <div className="flex items-center justify-center h-screen">
       <TodoList />
