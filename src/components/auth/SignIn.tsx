@@ -3,7 +3,8 @@
 import { authenticate } from "@/actions/userAction";
 import { UserActionState } from "@/types/user";
 import Link from "next/link";
-import { useActionState } from "react";
+import { useRouter } from "next/navigation";
+import { useActionState, useEffect } from "react";
 
 const initialState: UserActionState = {
   message: "",
@@ -11,7 +12,15 @@ const initialState: UserActionState = {
 };
 
 export function SignIn() {
+  const router = useRouter();
   const [state, action, isPending] = useActionState(authenticate, initialState);
+
+  useEffect(() => {
+    if (state?.success) {
+      router.push("/");
+      router.refresh();
+    }
+  }, [state?.success, router]);
 
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
