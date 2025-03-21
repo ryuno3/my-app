@@ -18,7 +18,6 @@ export function SignIn() {
   useEffect(() => {
     if (state?.success) {
       router.push("/");
-      router.refresh();
     }
   }, [state?.success, router]);
 
