@@ -47,6 +47,8 @@ export const addTodo = async (
 ): Promise<TodoActionState> => {
   try {
     const task = formdata.get("task") as string;
+    const userId = formdata.get("userId") as string;
+
     if (!task?.trim()) {
       return {
         message: "Task cannot be empty",
@@ -54,7 +56,7 @@ export const addTodo = async (
       };
     }
     await prisma.todo.create({
-      data: { title: task },
+      data: { title: task, userId: userId },
     });
     revalidateTag("todo");
     return { message: "Task added successfully", success: true };
