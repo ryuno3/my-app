@@ -46,10 +46,35 @@ export const authenticate = async (
   _prevState: UserActionState,
   formData: FormData
 ): Promise<UserActionState> => {
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+
+  const user = await prisma.user.findUnique({
+    where: { email },
+  });
+
+  const hashedPassword = await hashPassword(password);
+
+  if (!user || !user.password) {
+    return {
+      message: "Invalid email or password",
+      success: false,
+    };
+  }
+
+  const isValid = password === hashedPassword;
+
+  if (!isValid) {
+    return {
+      message: "Invalid email or password",
+      success: false,
+    };
+  }
+
   try {
     const result = await signIn("credentials", {
-      email: formData.get("email") as string,
-      password: formData.get("password") as string,
+      email: email,
+      password: hashedPassword,
       redirect: false,
     });
 

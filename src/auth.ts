@@ -1,7 +1,6 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 // Your own logic for dealing with plaintext password strings; be careful!
-import { verifyPassword } from "@/utils/auth/password";
 import { prisma } from "./lib/prisma/prismaClient";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -29,17 +28,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           where: { email: credentials.email as string },
         });
 
-        if (!user || !user.password) {
-          throw new Error("Invalid credentials");
+        if (!user) {
+          throw new Error("No user found");
         }
-
-        const isValid = await verifyPassword(credentials.password as string, user.password);
-
-        if (!isValid) {
-          throw new Error("Invalid credentials");
-        }
-
-        // return user object with their profile data
 
         return {
           id: user.id,
