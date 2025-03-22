@@ -1,7 +1,7 @@
 "use server";
 import { prisma } from "@/lib/prisma/prismaClient";
 import { TodoActionState } from "@/types/todo";
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 export const checkCompleted = async (id: string, state: boolean) => {
   try {
@@ -58,7 +58,7 @@ export const addTodo = async (
     await prisma.todo.create({
       data: { title: task, userId: userId },
     });
-    revalidateTag("todo");
+    revalidatePath("/");
     return { message: "Task added successfully", success: true };
   } catch (e) {
     console.error("create処理でのエラー:", e);
