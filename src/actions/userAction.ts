@@ -3,7 +3,7 @@
 import { signIn } from "@/auth";
 import { prisma } from "@/lib/prisma/prismaClient";
 import { UserActionState } from "@/types/user";
-import { hashPassword } from "@/utils/auth/password";
+import { hashPassword, verifyPassword } from "@/utils/auth/password";
 import { redirect } from "next/navigation";
 
 export const addUser = async (
@@ -46,10 +46,34 @@ export const authenticate = async (
   _prevState: UserActionState,
   formData: FormData
 ): Promise<UserActionState> => {
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+
+  if (!email || !password) {
+    return {
+      message: "All fields are required",
+      success: false,
+    };
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { email: email },
+  });
+
+  if (!user || !user.password) {
+    throw new Error("Invalid credentials");
+  }
+
+  const isValid = await verifyPassword(password, user.password);
+
+  if (!isValid) {
+    throw new Error("Invalid credentials");
+  }
+
   try {
     const result = await signIn("credentials", {
-      email: formData.get("email") as string,
-      password: formData.get("password") as string,
+      email: email,
+      password: password,
       redirect: false,
     });
 

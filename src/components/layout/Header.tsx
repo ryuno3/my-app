@@ -1,12 +1,8 @@
-"use client";
-
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import SignOut from "../auth/SignOut";
+import { Session } from "next-auth";
 
-export function Header() {
-  const { data: session, status } = useSession();
-
+export async function Header({ session }: { session: Session | null }) {
   return (
     <header className="bg-white shadow">
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex justify-between items-center">
@@ -14,9 +10,7 @@ export function Header() {
           Todo App
         </Link>
         <div className="flex items-center gap-4">
-          {status === "loading" ? (
-            <div>Loading...</div>
-          ) : session?.user ? (
+          {session?.user ? (
             <div className="flex items-center gap-4">
               <span className="text-sm text-gray-700">
                 Welcome, {session.user.name || session.user.email}
