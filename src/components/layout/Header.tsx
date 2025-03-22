@@ -1,10 +1,8 @@
 import Link from "next/link";
 import SignOut from "../auth/SignOut";
-import { auth } from "@/auth";
+import { Session } from "next-auth";
 
-export async function Header() {
-  const session = await auth();
-
+export async function Header({ session }: { session: Session | null }) {
   return (
     <header className="bg-white shadow">
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex justify-between items-center">

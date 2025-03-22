@@ -4,7 +4,7 @@ import Credentials from "next-auth/providers/credentials";
 import { prisma } from "./lib/prisma/prismaClient";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  debug: true,
+  debug: false,
   session: {
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60, // 30 days
@@ -26,11 +26,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         const user = await prisma.user.findUnique({
           where: { email: credentials.email as string },
+          select: {
+            id: true,
+            email: true,
+            name: true,
+            password: true,
+          },
         });
 
-        if (!user) {
-          throw new Error("No user found");
+        if (!user || !user.password) {
+          throw new Error("Invalid credentials");
         }
+
+        // return user object with their profile data
 
         return {
           id: user.id,
