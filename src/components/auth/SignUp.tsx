@@ -16,7 +16,7 @@ export function SignUp() {
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-white">
           Create new account
         </h2>
       </div>
@@ -32,7 +32,10 @@ export function SignUp() {
           )}
 
           <div>
-            <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-200"
+            >
               Name
             </label>
             <div className="mt-2">
@@ -43,14 +46,17 @@ export function SignUp() {
                 autoComplete="name"
                 required
                 disabled={isPending}
-                className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 disabled:bg-gray-100 disabled:cursor-not-allowed sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 disabled:bg-gray-100 disabled:cursor-not-allowed sm:text-sm sm:leading-6 dark:bg-gray-800 dark:ring-gray-700"
                 placeholder="john doe"
               />
             </div>
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-200"
+            >
               Email address
             </label>
             <div className="mt-2">
@@ -61,14 +67,17 @@ export function SignUp() {
                 autoComplete="email"
                 required
                 disabled={isPending}
-                className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 disabled:bg-gray-100 disabled:cursor-not-allowed sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 disabled:bg-gray-100 disabled:cursor-not-allowed sm:text-sm sm:leading-6 dark:bg-gray-800 dark:ring-gray-700"
                 placeholder="your@email.com"
               />
             </div>
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-200"
+            >
               Password
             </label>
             <div className="mt-2">
@@ -79,7 +88,7 @@ export function SignUp() {
                 autoComplete="new-password"
                 required
                 disabled={isPending}
-                className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 disabled:bg-gray-100 disabled:cursor-not-allowed sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 disabled:bg-gray-100 disabled:cursor-not-allowed sm:text-sm sm:leading-6 dark:bg-gray-800 dark:ring-gray-700"
                 placeholder="••••••••"
               />
             </div>
@@ -97,7 +106,7 @@ export function SignUp() {
         </form>
 
         {state?.success ? (
-          <p className="mt-6 text-center text-sm text-gray-500">
+          <p className="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
             Account created successfully!{" "}
             <Link
               href="/sign-in"
@@ -107,7 +116,7 @@ export function SignUp() {
             </Link>
           </p>
         ) : (
-          <p className="mt-6 text-center text-sm text-gray-500">
+          <p className="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
             Already have an account?{" "}
             <Link
               href="/sign-in"
