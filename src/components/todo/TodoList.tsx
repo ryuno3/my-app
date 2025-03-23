@@ -18,9 +18,9 @@ export default async function TodoList({ session }: { session: Session | null })
 
   return (
     <div className="grid grid-cols-1 gap-4 w-full max-w-[600px]">
-      <h1 className="text-4xl font-bold">Todolist</h1>
+      <h1 className="text-4xl font-bold text-black dark:text-gray-900">Todolist</h1>
       <TodoForm userId={session.user.id} />
-      <div className="grid grid-cols-1 gap-4">
+      <div className="grid grid-cols-1 gap-4 text-black dark:text-gray-300">
         {todos.length === 0 ? (
           <p className="text-lg">No tasks</p>
         ) : (

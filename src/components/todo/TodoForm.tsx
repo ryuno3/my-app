@@ -20,13 +20,13 @@ export default function TodoForm({ userId }: { userId: string }) {
           type="text"
           name="task"
           placeholder="Add a new task"
-          className="p-2 border border-gray-300 rounded"
+          className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 disabled:bg-gray-100 disabled:cursor-not-allowed sm:text-sm sm:leading- dark:ring-gray-700"
           disabled={isPending}
         />
         <button
           type="submit"
-          className={`p-2 text-white rounded transition-colors ${
-            isPending ? "bg-blue-300" : "bg-blue-500 hover:bg-blue-600"
+          className={`flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${
+            isPending ? "bg-indigo-400 cursor-not-allowed" : "bg-indigo-600 hover:bg-indigo-500"
           }`}
           disabled={isPending}
         >
